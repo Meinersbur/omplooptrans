@@ -748,7 +748,7 @@ def main():
     parser = argparse.ArgumentParser(description="OpenMP loop transformation simulator")
     parser.add_argument('input', type=argparse.FileType('r'),default='-')
     parser.add_argument('-o', dest='output', default='-', type=argparse.FileType('w+'))
-    parser.add_argument('--debug-lex',type=bool, help="Print token stream")
+    parser.add_argument('--debug-lex',action='store_true', help="Print token stream")
 
     args = parser.parse_args()
 
@@ -767,7 +767,7 @@ def main():
             break
         stmt = parse_stmt(strm)
         transformed = stmt.transform()
-        print(transformed)
+        print(transformed,file=args.output)
 
     return 0
 
