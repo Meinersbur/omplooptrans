@@ -748,15 +748,17 @@ def main():
     parser = argparse.ArgumentParser(description="OpenMP loop transformation simulator")
     parser.add_argument('input', type=argparse.FileType('r'),default='-')
     parser.add_argument('-o', dest='output', default='-', type=argparse.FileType('w+'))
+    parser.add_argument('--debug-lex',type=bool, help="Print token stream")
 
     args = parser.parse_args()
 
     tokstream = lex(args.input)
-    #def print_and_yield(stream):
-    #  for x in stream:
-    #    print(repr(x))
-    #    yield x
-    #tokstream = print_and_yield(tokstream)
+    def print_and_yield(stream):
+      for x in stream:
+        print(repr(x))
+        yield x
+    if args.debug_lex:
+        tokstream = print_and_yield(tokstream)
     strm = TokenStream(tokstream).range()
 
     stmts = []
